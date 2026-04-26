@@ -13,7 +13,9 @@ The user enters what they want to find (using a keyword), the type of file they 
 
 ## Preview
 
-![Direct Download Search Preview](preview.png)
+![Direct Download Search Preview]
+<img width="1052" height="526" alt="Direct Download Search" src="https://github.com/user-attachments/assets/9ea4c433-c93e-4826-b9ce-043a06b880be" />
+
 
 ---
 
