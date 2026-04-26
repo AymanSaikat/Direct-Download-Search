@@ -1,4 +1,4 @@
-<div align="center">
+<div align="center"> 
 <svg xmlns="http://www.w3.org/2000/svg" width="668" height="440">
   <foreignObject width="100%" height="100%">
     <div xmlns="http://www.w3.org/1999/xhtml" style="background:#0d1117;padding:30px 40px;border-radius:12px;display:inline-block;width:588px;text-align:center;">
