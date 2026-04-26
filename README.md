@@ -1,7 +1,7 @@
 # Direct Download Search
 
 > Direct Download Search: A simple browser based tool named has been created using Google Dork queries to search through open directory servers for publicly accessible files.
-The user enters what they want to find (using a keyword), the type of file they want (video, music, book, software or image) and this will build and launch a specific targeted Google search with no back end, no log in and no scraping, only fast and intelligent file discovery.
+The user enters what they want to find (using a keyword), the type of file they want (video, music, book, software or image) and this will build and launch a specific targeted Google search with no back end, no log in and no scraping, only fast and intelligent file discovery. 
 
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
