@@ -40,7 +40,7 @@
 
 <br/>
 
-[**🌐 Live Demo**](https://aymansaikat.blogspot.com) &nbsp;·&nbsp; [**🐛 Report Bug**](https://github.com/aymansaikat/direct-download-search/issues) &nbsp;·&nbsp; [**✨ Request Feature**](https://github.com/aymansaikat/direct-download-search/issues) &nbsp;·&nbsp; [**⭐ Star this repo**](https://github.com/aymansaikat/direct-download-search)
+[**🌐 Live Demo**] (https://aymansaikat.github.io/dds/) (https://aymansaikat.blogspot.com) &nbsp;·&nbsp; [**🐛 Report Bug**](https://github.com/aymansaikat/dds/issues) &nbsp;·&nbsp; [**✨ Request Feature**](https://github.com/aymansaikat/dds/issues) &nbsp;·&nbsp; [**⭐ Star this repo**](https://github.com/aymansaikat/dds)
 
 </div>
 
@@ -155,10 +155,10 @@ No installation needed. Works in any modern browser.
 
 ```bash
 # Clone the repo
-git clone https://github.com/aymansaikat/direct-download-search.git
+git clone https://github.com/aymansaikat/dds.git
 
 # Navigate into the folder
-cd direct-download-search
+cd dds
 
 # Open in your browser
 open index.html        # macOS
