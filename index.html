@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Direct Download Search</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+  <style>
+    :root{
+      --bg-color:#f4f7f6;
+      --card-bg:#fff;
+      --text-color:#343a40;
+      --border-color:#e9ecef;
+      --primary-color:#4361ee;
+      --primary-hover:#3651de;
+      /* --- Logo theme variables --- */
+      --logo-stroke: black;
+      --logo-text: black;
+    }
+    [data-theme="dark"]{
+      --bg-color:#0f0f0f;
+      --card-bg:#1a1a1a;
+      --text-color:#e4e4e7;
+      --border-color:#2a2a2a;
+      --primary-color:#5a7fff;
+      --primary-hover:#4a6fe8;
+      /* --- Logo theme variables for dark mode --- */
+      --logo-stroke: white;
+      --logo-text: white;
+    }
+    body{
+      background:var(--bg-color);
+      color:var(--text-color);
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      transition:background-color .2s,color .2s;
+      padding-top: 1rem;
+    }
+
+    /* Logo center - Updated for smaller logo and spacing */
+    .logo-wrapper{
+      display:flex;
+      justify-content:center;
+      margin-top:1.5rem; 
+      margin-bottom:2rem; 
+    }
+    .logo svg{ 
+      max-width:100%; 
+      height:auto; 
+      display:block; 
+    }
+
+    /* --- STYLES FOR SMALLER LOGO --- */
+    .logo-svg {
+      /* Set a smaller, fixed size for desktops */
+      width: 400px;
+      height: 133px; /* Maintains aspect ratio */
+    }
+
+    /* Make it responsive for smaller screens */
+    @media (max-width: 768px) {
+      .logo-svg {
+        width: 100%;
+        max-width: 350px; /* Adjusted for smaller logo */
+        height: auto; /* Let height scale with width */
+      }
+      .logo-wrapper {
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .logo-svg {
+        max-width: 280px; /* Adjusted for smaller logo */
+      }
+      .logo-wrapper {
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+      }
+    }
+    /* --- END OF NEW STYLES --- */
+
+    .search-card{
+      background:var(--card-bg);
+      border:1px solid var(--border-color);
+      border-radius:14px;
+      padding:1.25rem;
+      max-width:980px;
+      margin:0.5rem auto 1.25rem;
+      box-shadow:0 6px 22px rgba(0,0,0,0.06);
+    }
+    .results-container{
+      /* Ensure results container is visible but shows a message instead of search results */
+      max-width:980px;
+      margin:1rem auto 3rem;
+      background:var(--card-bg);
+      border:1px solid var(--border-color);
+      border-radius:12px;
+      padding:1rem;
+      box-shadow:0 6px 18px rgba(0,0,0,0.06);
+    }
+    
+    /* Removed unnecessary styles for result-item, result-title, etc. as we no longer scrape them */
+    .small-muted{color:#6c757d;font-size:.92rem;}
+    footer{ text-align:center;padding:1rem; }
+
+    @media (max-width:576px){
+      .search-card{margin:1rem;padding:.85rem}
+    }
+  </style>
+</head>
+<body>
+  <div class="logo-wrapper">
+    <div class="logo" role="img" aria-label="Site logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -10 600 220" class="logo-svg" preserveAspectRatio="xMidYMid meet" role="presentation">
+        <a href="https://aymansaikat.blogspot.com" target="_blank" rel="noopener">
+          <defs>
+            <style type="text/css">
+              /* Remove underline from the link */
+              a {
+                text-decoration: none;
+                fill: inherit;
+              }
+              .logo-rect-text, .logo-text { font-family: "PT Sans", Arial, sans-serif; }
+              /* --- UPDATED: Use CSS variables for colors --- */
+              .logo-rect { fill: none; stroke: var(--logo-stroke); stroke-width: 20; }
+              .logo-rect-text { fill: var(--logo-text); font-weight: bold; font-size:140px; text-anchor:middle; dominant-baseline:middle; }
+              .logo-text { fill: var(--logo-text); }
+              /* The old media query is no longer needed */
+            </style>
+          </defs>
+
+          <rect class="logo-rect" width="200" height="200" x="10" y="0" rx="20" ry="20"></rect>
+
+          <text x="110" y="100" class="logo-rect-text">as</text>
+
+          <text x="250" y="60" font-size="100" class="logo-text" dominant-baseline="middle">Ayman</text>
+          <text x="230" y="150" font-size="120" font-weight="bold" class="logo-text" dominant-baseline="middle">Saikat</text>
+        </a>
+      </svg>
+    </div>
+  </div>
+
+  <main class="container">
+    <section class="search-card" aria-labelledby="searchHeading">
+      <h2 id="searchHeading" class="visually-hidden">Search</h2>
+
+      <form id="searchForm">
+        <div class="input-group input-group-lg">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="filetypeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-file-earmark-text"></i> <span id="filetypeText">All Files</span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="filetypeDropdown">
+            <li><a class="dropdown-item" href="#" data-type="all"><i class="bi bi-file-earmark-text me-2"></i>All Files</a></li>
+            <li><a class="dropdown-item" href="#" data-type="mkv|mp4|avi|mov|mpg|wmv|divx|mpeg"><i class="bi bi-film me-2"></i>Video / Movies</a></li>
+            <li><a class="dropdown-item" href="#" data-type="MOBI|CBZ|CBR|CBC|CHM|EPUB|FB2|LIT|LRF|ODT|PDF|PRC|PDB|PML|RB|RTF|TCR|DOC|DOCX"><i class="bi bi-book me-2"></i>Books</a></li>
+            <li><a class="dropdown-item" href="#" data-type="mp3|wav|ac3|ogg|flac|wma|m4a|aac|mod"><i class="bi bi-music-note-beamed me-2"></i>Music / Audio</a></li>
+            <li><a class="dropdown-item" href="#" data-type="exe|iso|dmg|tar|7z|bz2|gz|rar|zip|apk"><i class="bi bi-gear me-2"></i>Software / Games</a></li>
+            <li><a class="dropdown-item" href="#" data-type="jpg|png|bmp|gif|tif|tiff|psd"><i class="bi bi-image me-2"></i>Images</a></li>
+          </ul>
+
+          <input id="query" class="form-control" type="text" placeholder="e.g., The Blacklist S01E01 or Dune" aria-label="Search query" required>
+          <button class="btn btn-primary btn-search" type="submit" id="submitButton"><i class="bi bi-search"></i> Search</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="results-container" id="resultsContainer" aria-live="polite" style="display:none;">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <div>
+          <h5 class="mb-0">Search Launched</h5>
+          <div class="small-muted">The search was opened in a new tab/window using the Google Dork query below.</div>
+        </div>
+        <div class="text-end">
+          <a id="resultsLink" class="btn btn-outline-primary" target="_blank" rel="noopener">
+            <i class="bi bi-box-arrow-up-right"></i> Go to Google Results
+          </a>
+        </div>
+      </div>
+
+      <div id="previewList" class="list-group mb-2" role="list"></div>
+      <div id="queryBox" class="small-muted text-break"><strong>Query:</strong> <span id="queryText"></span></div>
+    </section>
+  </main>
+
+  <footer>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('searchForm');
+      const queryInput = document.getElementById('query');
+      const resultsContainer = document.getElementById('resultsContainer');
+      const previewList = document.getElementById('previewList');
+      const queryText = document.getElementById('queryText');
+      const resultsLink = document.getElementById('resultsLink');
+      const filetypeText = document.getElementById('filetypeText');
+
+      let currentFileType = 'all';
+
+      // Dropdown selection
+      document.querySelectorAll('#filetypeDropdown + .dropdown-menu .dropdown-item').forEach(item => {
+        item.addEventListener('click', e => {
+          e.preventDefault();
+          currentFileType = e.currentTarget.dataset.type;
+          filetypeText.textContent = e.currentTarget.textContent.trim();
+        });
+      });
+
+      function buildDork(q, fileType){
+        // The original, effective Google Dork logic
+        const exclusions = '-inurl:(jsp|php|html|aspx|htm|cf|shtml|listen77|mp3raid|mp3toss|mp3drug|index_of|index-of|wallywashis|downloadmana)';
+        const indexOperator = 'intitle:index.of';
+        const filePart = (fileType && fileType !== 'all') ? `+(${fileType})` : '';
+        return `${q} ${filePart} ${exclusions} ${indexOperator}`.trim();
+      }
+
+      // --- FIX: Replace the failing proxy/scraping logic with a direct launch ---
+      form.addEventListener('submit', (ev) => {
+        ev.preventDefault();
+        const q = queryInput.value.trim();
+        if(!q) return;
+        
+        const dork = buildDork(q, currentFileType);
+        const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(dork)}`;
+
+        // 1. Update the results panel with the Dork query
+        queryText.textContent = dork;
+        resultsLink.href = googleUrl;
+
+        // 2. Show the results container (to display the dork and link)
+        resultsContainer.style.display = 'block';
+        resultsContainer.scrollIntoView({behavior:'smooth'});
+
+        // 3. Display an informational message
+        previewList.innerHTML = `
+            <div class="alert alert-success" role="alert">
+              <i class="bi bi-box-arrow-up-right me-2"></i>
+              <strong>Success!</strong> The Google search for the Dork query has been opened in a new tab/window.
+            </div>`;
+
+        // 4. Launch the search directly in a new tab/window
+        window.open(googleUrl, '_blank');
+      });
+      // --- END OF FIX ---
+    });
+  </script>
+</body>
+</html>
